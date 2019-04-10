@@ -26,6 +26,16 @@ class App extends Component {
     )
   }
 
+  handleRemoveOne = (item) => {
+    let index = this.state.cart.indexOf(item.id);
+    this.setState({
+      cart : [
+        ...this.state.cart.slice(0, index),
+        ...this.state.cart.slice(index + 1)
+      ]
+    });
+  }
+  
 
   renderContent= () =>{
     switch ( this.state.activeTab) {
@@ -37,7 +47,7 @@ class App extends Component {
 
   renderCart() {
     // Count how many of each item is in the cart
-    let itemCounts = this .state.cart.reduce((itemCounts, itemId) => {
+    let itemCounts = this.state.cart.reduce((itemCounts, itemId) => {
       itemCounts[itemId] = itemCounts[itemId] || 0;
       itemCounts[itemId] ++ ;
       return itemCounts;
@@ -56,7 +66,9 @@ class App extends Component {
     }
   });
   return (
-    <CartPage items={cartItems} />
+    <CartPage items={cartItems} 
+              onAddOne={ this.handleAddToCart}
+              onRemoveOne={ this.handleRemoveOne}/>  
   );
 }
 
